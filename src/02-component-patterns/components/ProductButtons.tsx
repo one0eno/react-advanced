@@ -6,6 +6,7 @@ export interface Props {
   increaseValue?: number;
   className?: string;
   style?: React.CSSProperties;
+  value?: number;
 }
 
 export const ProductButtons = ({

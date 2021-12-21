@@ -6,60 +6,13 @@ import {
   ProductTitle,
   ProductCard,
 } from "../components";
-import { Product } from "../interfaces/interfaces";
+import { Product, ProductInCart } from "../interfaces/interfaces";
 import "../styles/custom-styles.css";
-
-const product = {
-  id: "1",
-  title: "Coffee mug",
-  img: "coffee-mug.png",
-  increaseValue: 1,
-};
-
-const product2 = {
-  id: "2",
-  title: "Coffee mug 2",
-  img: "coffee-mug2.png",
-  increaseValue: 1,
-};
-
-const products: Product[] = [product, product2];
-
-interface ProductInCart extends Product {
-  count: number;
-}
+import { products } from "../data/products";
+import { useShoppingCar } from "../hooks/useShoppingCar";
 
 export const ShoppingPage = () => {
-  const [ShoppingCart, setShoppingCart] = useState<{
-    [key: string]: ProductInCart;
-  }>({
-    "1": { ...product, count: 10 },
-    "2": { ...product2, count: 2 },
-  });
-
-  const onProductCountChange = ({
-    count,
-    product,
-  }: {
-    count: number;
-    product: Product;
-  }) => {
-    console.log("as", count);
-    setShoppingCart((oldShoppingCar) => {
-      if (count === 0) {
-        const { [product.id]: toDelete, ...rest } = oldShoppingCar;
-
-        return {
-          ...rest,
-        };
-      }
-
-      return {
-        ...oldShoppingCar,
-        [product.id]: { ...product, count },
-      };
-    });
-  };
+  const { ShoppingCart, onProductCountChange } = useShoppingCar();
 
   return (
     <>
@@ -83,6 +36,7 @@ export const ShoppingPage = () => {
               key={product.id}
               product={product}
               className="bg-dark text-white "
+              value={ShoppingCart[product.id]?.count || 0}
               onChange={onProductCountChange}
             >
               <ProductImage
@@ -95,30 +49,23 @@ export const ShoppingPage = () => {
           ))}
         </div>
         <div className="shopping-cart">
-          <ProductCard
-            product={product2}
-            className="bg-dark text-white "
-            style={{ width: "100px" }}
-          >
-            <ProductImage
-              className="custom-image"
-              style={{ boxShadow: "10px 10px 10px rgba(0,0,0,0.2)" }}
-            />
+          {Object.entries(ShoppingCart).map(([key, product]) => (
+            <ProductCard
+              key={key}
+              product={product}
+              className="bg-dark text-white "
+              style={{ width: "100px" }}
+              onChange={onProductCountChange}
+              value={product.count}
+            >
+              <ProductImage
+                className="custom-image"
+                style={{ boxShadow: "10px 10px 10px rgba(0,0,0,0.2)" }}
+              />
 
-            <ProductButtons className="custom-button" />
-          </ProductCard>
-          <ProductCard
-            product={product}
-            className="bg-dark text-white "
-            style={{ width: "100px" }}
-          >
-            <ProductImage
-              className="custom-image"
-              style={{ boxShadow: "10px 10px 10px rgba(0,0,0,0.2)" }}
-            />
-
-            <ProductButtons className="custom-button" />
-          </ProductCard>
+              <ProductButtons className="custom-button" />
+            </ProductCard>
+          ))}
         </div>
       </div>
     </>
