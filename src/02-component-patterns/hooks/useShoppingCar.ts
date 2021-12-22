@@ -14,37 +14,18 @@ export const useShoppingCar = () => {
     product: Product;
   }) => {
     setShoppingCart((oldShoppingCar) => {
-      const productInCart: ProductInCart = oldShoppingCar[product.id] || {
-        ...product,
-        count: 0,
-      };
+      if (count === 0) {
+        const { [product.id]: toDelete, ...rest } = oldShoppingCar;
 
-      if (Math.max(productInCart.count + count, 0) > 0) {
-        productInCart.count += count;
         return {
-          ...oldShoppingCar,
-          [product.id]: productInCart,
+          ...rest,
         };
       }
 
-      const { [product.id]: toDelete, ...rest } = oldShoppingCar;
-
       return {
-        ...rest,
+        ...oldShoppingCar,
+        [product.id]: { ...product, count },
       };
-
-      // if (count === 0) {
-      //   const { [product.id]: toDelete, ...rest } = oldShoppingCar;
-
-      //   return {
-      //     ...rest,
-      //   };
-      // }
-
-      // return {
-      //   ...oldShoppingCar,
-      //   [product.id]: { ...product, count },
-      // };
     });
   };
 
