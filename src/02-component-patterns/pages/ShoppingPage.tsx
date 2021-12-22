@@ -44,7 +44,7 @@ export const ShoppingPage = () => {
                 <button onClick={() => increaseBy(+2)}>+2</button>
               )}
               <span>
-                {count} - {maxCount}{" "}
+                {count} - {maxCount}
               </span>
             </>
           )}
