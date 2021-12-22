@@ -5,6 +5,8 @@ import {
   ProductContextProps,
   Product,
   onChangeArgs,
+  InitialValues,
+  ProductdCardHandlers,
 } from "../interfaces/interfaces";
 
 import { ProductTitle } from "./ProductTitle";
@@ -16,22 +18,31 @@ const { Provider } = ProductContext;
 
 export interface Props {
   product: Product;
-  children?: ReactElement | ReactElement[];
+  //children?: ReactElement | ReactElement[];
+  children: (args: ProductdCardHandlers) => JSX.Element;
   className?: string;
   style?: React.CSSProperties;
   onChange?: (args: onChangeArgs) => void;
   value?: number;
+  initialValues?: InitialValues;
 }
 export const ProductCard = ({
-  children,
   product,
+  children,
   className,
   style,
   onChange,
   value,
+  initialValues,
 }: Props) => {
   //
-  const { counter, increaseBy } = useProduct({ onChange, product, value });
+  const { counter, isMaxCountReached, maxCount, increaseBy, reset } =
+    useProduct({
+      onChange,
+      product,
+      value,
+      initialValues,
+    });
 
   return (
     <Provider
@@ -39,10 +50,18 @@ export const ProductCard = ({
         counter,
         increaseBy,
         product,
+        maxCount,
       }}
     >
       <div className={`${styles.productCard} ${className}`} style={style}>
-        {children}
+        {children({
+          count: counter,
+          isMaxCountReached,
+          maxCount: initialValues?.maxCount,
+          product,
+          increaseBy,
+          reset,
+        })}
       </div>
     </Provider>
   );
