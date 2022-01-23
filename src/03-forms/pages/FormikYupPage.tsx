@@ -1,23 +1,10 @@
 import React from 'react';
-import { FormikErrors, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import '../styles/styles.css';
 import * as Yup from 'yup';
 
-interface FormValues {
-  firstName?: String;
-  lastName?: String;
-  email?: String;
-}
 export const FormikYupPage = () => {
-  const {
-    handleChange,
-    values,
-    handleSubmit,
-    errors,
-    touched,
-    handleBlur,
-    getFieldProps,
-  } = useFormik({
+  const { handleChange, values, handleSubmit, errors, touched, handleBlur, getFieldProps } = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
@@ -27,15 +14,9 @@ export const FormikYupPage = () => {
       console.log(values);
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, 'Ha de tener 15 caracteres como máximo')
-        .required('Requerido'),
-      lastName: Yup.string()
-        .max(15, 'Ha de tener 15 caracteres como máximo')
-        .required('Requerido'),
-      email: Yup.string()
-        .required('Requerido')
-        .email('El email no es correcto'),
+      firstName: Yup.string().max(15, 'Ha de tener 15 caracteres como máximo').required('Requerido'),
+      lastName: Yup.string().max(15, 'Ha de tener 15 caracteres como máximo').required('Requerido'),
+      email: Yup.string().required('Requerido').email('El email no es correcto'),
     }),
   });
 
@@ -45,9 +26,7 @@ export const FormikYupPage = () => {
       <form onSubmit={handleSubmit} noValidate autoComplete='off'>
         <label htmlFor='firstNam'>First name</label>
         <input type='text' title='name' {...getFieldProps('firstName')} />
-        {touched.lastName && errors.firstName && (
-          <span>{errors.firstName}</span>
-        )}
+        {touched.lastName && errors.firstName && <span>{errors.firstName}</span>}
 
         <label htmlFor='lastName'>Last name</label>
         <input type='text' title='lastName' {...getFieldProps('lastName')} />

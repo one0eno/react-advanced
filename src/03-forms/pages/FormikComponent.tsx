@@ -24,19 +24,11 @@ export const FormikComponent = () => {
           console.log(values);
         }}
         validationSchema={Yup.object({
-          firstName: Yup.string()
-            .max(15, 'Ha de tener 15 caracteres como máximo')
-            .required('Requerido'),
-          lastName: Yup.string()
-            .max(15, 'Ha de tener 15 caracteres como máximo')
-            .required('Requerido'),
-          email: Yup.string()
-            .required('Requerido')
-            .email('El email no es correcto'),
+          firstName: Yup.string().max(15, 'Ha de tener 15 caracteres como máximo').required('Requerido'),
+          lastName: Yup.string().max(15, 'Ha de tener 15 caracteres como máximo').required('Requerido'),
+          email: Yup.string().required('Requerido').email('El email no es correcto'),
           terms: Yup.boolean().oneOf([true], 'Debe de aceptar las condiciones'),
-          jobType: Yup.string()
-            .notOneOf(['it-junior'], 'Esta opción no es permitida')
-            .required('Seleccione un tipo'),
+          jobType: Yup.string().notOneOf(['it-junior'], 'Esta opción no es permitida').required('Seleccione un tipo'),
         })}
       >
         {(formik) => (

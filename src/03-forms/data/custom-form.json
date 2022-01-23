@@ -1,0 +1,67 @@
+[
+  {
+    "type": "input",
+    "name": "firstName",
+    "placeholder": "Jorge",
+    "label": "First Name",
+    "value": "",
+    "validation": [
+      {
+        "type": "required"
+      },
+      {
+        "type": "minLength",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "type": "input",
+    "name": "lastName",
+    "placeholder": "",
+    "label": "Last Name",
+    "value": "",
+    "validation": [
+      {
+        "type": "required"
+      }
+    ]
+  },
+  {
+    "type": "email",
+    "name": "email",
+    "placeholder": "",
+    "label": "Email",
+    "value": "",
+    "validation": [
+      {
+        "type": "required"
+      },
+      {
+        "type": "email"
+      }
+    ]
+  },
+  {
+    "type": "select",
+    "name": "favoriteGame",
+    "placeholder": "",
+    "label": "Favorite Game",
+    "value": "",
+    "options": [
+      {
+        "id": "1",
+        "label": "Quake"
+      },
+      {
+        "id": "2",
+        "label": "Quake II"
+      }
+    ],
+    "validation": [
+      {
+        "type": "required"
+      }
+    ]
+  }
+]
